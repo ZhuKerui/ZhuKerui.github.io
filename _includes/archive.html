@@ -1,0 +1,76 @@
+<!-- each category page -->
+{% if page.type %}
+<div class="archive">
+  <p class="archive_type">{{ page.type }}</p>
+  <ul>
+    {% for post in site.categories[page.type] %}
+    {% if post.url %}
+    <li>
+        <time class='archive_date' datetime='{{ post.date | date_to_xmlschema }}'>
+          {{ post.date | date: "%b %-d, %Y" }}
+        </time>
+        <div class='archive_title'>
+          <a href='{{ post.url | relative_url }}'>
+            {{ post.title | escape }}
+          </a>
+        </div>
+      </li>
+    {% endif %}
+    {% endfor %}
+
+  </ul>
+</div>
+
+<!-- main page -->
+{% else %}
+<div class="archive">
+
+  <h1>About Me</h1>
+  <p>
+    I am a senior Computer Engineering student from Zhejiang University-University of Illinois at Urbana Champaign Institute (ZJU-UIUC Institute), Zhejiang, China. 
+    I also studied in UIUC for one semester in Fall 2019 as an exchange student.
+  </p>
+  <p>
+    In my last three years, I have grasped a series of basic computer knowledge through the major courses, such as computer system(ECE120, 220, 385), operating 
+    system(ECE391), analog signal processing(ECE210), database system(CS411), data structures(CS225) and algorithms(ECE374). As for math, I took calculus, differential 
+    equation and probability. 
+  </p>
+  <p>
+    During the study, I found myself quite interested in machine learning and data processing. So I took ECE498 IoT & Cognitive Computing and I am taking Artificial 
+    Intelligence(ECE448) this semester. I also found myself enjoying doing projects with professors. I took CS498 Wireless IoT Lab, instructed by professor Robin Hillary Kravets, 
+    when I was in UIUC. Now I am doing research with professor Chang Kevin Chenchuan studying keyword profiling in the form of individual study.
+  </p>
+
+  {% for category in site.categories %}
+  {% capture cat_name %}{{ category | first }}{% endcapture %}
+  <h1>{{ cat_name }}</h1>
+  {% assign section = 0 %}
+  {% for post in site.categories[cat_name] %}
+  {% unless section > 0 %}
+  <p class="archive_year">{{ post.date | date: '%Y' }}</p>
+  {% else %}
+  {% capture year %}{{ post.date | date: '%Y' }}{% endcapture %}
+  {% capture prev_year %}{{ post.previous.date | date: '%Y' }}{% endcapture %}
+  {% if year != prev_year %}
+  <p class="archive_year">{{ post.date | date: '%Y' }}</p>
+  {% endif %}
+  {% endunless %}
+  {% assign section = section | plus:1 %}
+
+  <ul>
+    <li>
+      <time class='archive_date' datetime='{{ post.date | date_to_xmlschema }}'>
+        {{ post.date | date: "%b %d" }}
+      </time>
+      <div class='archive_title'>
+        <a href='{{ post.url | relative_url }}'>
+          {{ post.title | escape }}
+        </a>
+      </div>
+    </li>
+  </ul>
+
+{% endfor %}
+{% endfor %}
+</div>
+{% endif %}
