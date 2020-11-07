@@ -22,7 +22,7 @@ user:
   pic: /assets/img/head.jpg
   picAlt: "kerui zhu's head"
   job: An ECE Undergraduate Student from Zhejiang University/University of Illinois at Urbana-Champaign
-  aboutme: true # comment this out if you don't need the 'about' page.
+  # aboutme: true # comment this out if you don't need the 'about' page.
 
 exclude:
   - README.md
